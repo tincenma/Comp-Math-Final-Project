@@ -1,44 +1,43 @@
-from flask import Flask, send_file
-import matplotlib.pyplot as plt
-import numpy as np
+from flask import Flask, request, jsonify, render_template, send_file
+from utils.graph_generator import generate_graphical_plot
+from utils.numerical_methods import find_root
+from utils.errors_calculations import calculate_absolute_error
 import io
 
 app = Flask(__name__)
 
-@app.route('/task1/graph-plot')
-def task1GraphPlot():
-    def f(x):
-        return x**3 - 4*x + 1
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-    # Генерация графика
-    x = np.linspace(0, 3, 500)  # Range of x values
-    y = f(x)
+@app.route('/graphical-method', methods=['POST'])
+def graphical_method():
+    data = request.json
+    function_str = data.get("function")
+    x_range = data.get("x_range")
 
-    plt.figure(figsize=(5, 6))
-    plt.plot(x, y, label="f(x) = x^3 - 4x + 1")
-    plt.axhline(0, color='red', linestyle='--', label="y = 0")
-    plt.xlabel("x")
-    plt.ylabel("f(x)")
-    plt.title("Graphical method")
-    plt.legend()
-    plt.grid()
-
-    # Сохранение графика в буфер
-    img = io.BytesIO()
-    plt.savefig(img, format='png')
-    img.seek(0)
-
+    # Generate graph and return it
+    img = generate_graphical_plot(function_str, x_range)
     return send_file(img, mimetype='image/png')
 
-@app.route('/task1/num-plot')
-def task1NumPlot():
+@app.route('/numerical-method', methods=['POST'])
+def numerical_method():
+    data = request.json
+    function_str = data.get("function")
+    x_range = data.get("x_range")
+    method = data.get("method")
 
-    # Сохранение графика в буфер
-    img = io.BytesIO()
-    plt.savefig(img, format='png')
-    img.seek(0)
+    root, img = find_root(function_str, x_range, method)
+    return jsonify({"root": root, "image": img})
 
-    return send_file(img, mimetype='image/png')
+@app.route('/calculate-absolute-error', methods=['POST'])
+def calculate_absolute_error():
+    data = request.json
+    user_root = float(data.get("user_root"))
+    true_root = float(data.get("true_root"))
+
+    abs_error = calculate_absolute_error(true_root, user_root)
+    return jsonify({"absolute_error": abs_error})
 
 if __name__ == '__main__':
     app.run(debug=True)
