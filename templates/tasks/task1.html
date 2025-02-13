@@ -1,0 +1,52 @@
+<div class="card mb-5">
+    <div class="card-body">
+        <h3>Graphical Method & Absolute Error</h3>
+        <p>Problem: Plot the graph of f(x)=x<sup>3</sup>−4x+1 in the range x∈[0,3].<br>
+            Use the graph to find an approximate root and calculate the absolute error compared to the root found using a numerical method.</p>
+
+        <div class="row">
+            <!-- Column 1: The input for users -->
+            <div class="col-3">
+                <form id="inputForm">
+                    <label for="function">Function:</label>
+                    <input type="text" id="function" class="form-control" placeholder="e.g., x^3 - 4x + 1">
+                    
+                    <label for="range">X Range:</label>
+                    <input type="text" id="range" class="form-control" placeholder="e.g., 0 3">
+                    
+                    <label for="numericalMethod">Choose Numerical Method:</label>
+                    <select id="numericalMethod" class="form-control">
+                        <option value="bisection">Bisection Method</option>
+                        <option value="newton">Newton-Raphson Method</option>
+                        <option value="secant">Secant Method</option>
+                        <option value="iteration">Iteration Method</option>
+                        <option value="falsePosition">False Position Method</option>
+                        <option value="muller">Muller's Method</option>
+                    </select>
+
+                    <label for="approxRoot">Approximate Root (Graphical Method):</label>
+                    <input type="text" id="approxRoot" class="form-control" placeholder="Enter your guess root by looking at the graph">
+                    
+                    <button type="submit" class="btn btn-primary mt-2">Calculate</button>
+                </form>
+            </div>
+            
+            <!-- Column 2: Results -->
+            <div class="col m-3">
+                <p id="absoluteError" class="ms-2 ps-5">Absolute Error: </p>
+                <div class="row">
+                    <div class="col">
+                        <div id="graphicalGraph">
+                            <img id="graphicalImage" src="http://localhost:5000/task1/graph-plot" class="img-fluid" alt="Graphical Method Graph">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div id="numericalGraph">
+                            <img id="numericalImage" src="http://localhost:5000/task1/num-plot" class="img-fluid" alt="Numerical Method Graph">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
