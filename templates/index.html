@@ -1,53 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Final Project</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Computational Mathematics App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { padding-top: 70px; }
+    .nav-link { font-weight: 500; }
+  </style>
 </head>
 <body>
-    <header class="d-flex justify-content-center text-light fs-5 py-4 bg-primary shadow">
-        Computational Mathematics App
-    </header>
-
-    <div class="container mt-4">
-        <!-- Tabs for selecting tasks -->
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTask('task1')">Task 1</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTask('task2')">Task 2</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTask('task3')">Task 3</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTask('task4')">Task 4</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTask('task5')">Task 5</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTask('task6')">Task 6</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTask('task7')">Task 7</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTask('task8')">Task 8</a>
-            </li>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">CompMath App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="task1.html">Task 1</a></li>
+          <li class="nav-item"><a class="nav-link" href="task2.html">Task 2</a></li>
+          <li class="nav-item"><a class="nav-link" href="task3.html">Task 3</a></li>
+          <li class="nav-item"><a class="nav-link" href="task4.html">Task 4</a></li>
+          <li class="nav-item"><a class="nav-link" href="task5.html">Task 5</a></li>
+          <li class="nav-item"><a class="nav-link" href="task6.html">Task 6</a></li>
+          <li class="nav-item"><a class="nav-link" href="task7.html">Task 7</a></li>
+          <li class="nav-item"><a class="nav-link" href="task8.html">Task 8</a></li>
         </ul>
-
-        <!-- Content Section -->
-        <div id="content" class="mt-3">
-            <p>Select a task to view its content.</p>
-        </div>
+      </div>
     </div>
-
-    <script src="/static/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </nav>
+  
+  <!-- Main content -->
+  <div class="container text-center">
+    <h1 class="mt-5">Welcome to the Computational Mathematics App</h1>
+    <p class="lead">Select a task from the navigation bar above to explore various numerical methods.</p>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

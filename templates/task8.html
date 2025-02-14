@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task 8 – Trapezoidal Rule Integration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style> body { padding-top: 70px; } </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">CompMath App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="task1.html">Task 1</a></li>
+          <li class="nav-item"><a class="nav-link" href="task2.html">Task 2</a></li>
+          <li class="nav-item"><a class="nav-link" href="task3.html">Task 3</a></li>
+          <li class="nav-item"><a class="nav-link" href="task4.html">Task 4</a></li>
+          <li class="nav-item"><a class="nav-link" href="task5.html">Task 5</a></li>
+          <li class="nav-item"><a class="nav-link" href="task6.html">Task 6</a></li>
+          <li class="nav-item"><a class="nav-link" href="task7.html">Task 7</a></li>
+          <li class="nav-item"><a class="nav-link active" href="task8.html">Task 8</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Page content -->
+  <div class="container mt-5">
+    <h3 class="text-center">Task 8: Trapezoidal Rule Integration</h3>
+    <p class="text-center">Approximate the integral of a function using the Trapezoidal Rule.</p>
+    <p>Enter the function (use Python syntax, e.g., x**2+x), integration interval (min and max separated by a space), and number of subintervals.</p>
+    <div class="mb-3">
+      <label for="function" class="form-label">Function f(x):</label>
+      <input type="text" id="function" class="form-control" value="x**2+x">
+    </div>
+    <div class="mb-3">
+      <label for="interval" class="form-label">Integration Interval (min max):</label>
+      <input type="text" id="interval" class="form-control" value="0 1">
+    </div>
+    <div class="mb-3">
+      <label for="subintervals" class="form-label">Number of Subintervals:</label>
+      <input type="number" id="subintervals" class="form-control" value="4">
+    </div>
+    <button onclick="integrateTrapezoidal()" class="btn btn-primary">Compute Integral</button>
+    <div class="mt-4" id="integrationResult"></div>
+  </div>
+  
+  <script>
+    function integrateTrapezoidal() {
+      const data = {
+        function: document.getElementById("function").value,
+        interval: document.getElementById("interval").value,
+        subintervals: document.getElementById("subintervals").value
+      };
+      fetch("http://localhost:5000/trapezoidal-rule", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        document.getElementById("integrationResult").innerHTML = `<strong>Approximate Integral:</strong> ${response.integral}`;
+      })
+      .catch(err => console.error("Error:", err));
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

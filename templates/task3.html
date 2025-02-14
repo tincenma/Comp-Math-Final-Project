@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task 3 – Jacobi Method</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style> body { padding-top: 70px; } </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">CompMath App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="task1.html">Task 1</a></li>
+          <li class="nav-item"><a class="nav-link" href="task2.html">Task 2</a></li>
+          <li class="nav-item"><a class="nav-link active" href="task3.html">Task 3</a></li>
+          <li class="nav-item"><a class="nav-link" href="task4.html">Task 4</a></li>
+          <li class="nav-item"><a class="nav-link" href="task5.html">Task 5</a></li>
+          <li class="nav-item"><a class="nav-link" href="task6.html">Task 6</a></li>
+          <li class="nav-item"><a class="nav-link" href="task7.html">Task 7</a></li>
+          <li class="nav-item"><a class="nav-link" href="task8.html">Task 8</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Page content -->
+  <div class="container mt-5">
+    <h3 class="text-center">Task 3: Jacobi Method</h3>
+    <p class="text-center">Solve the system of equations using the Jacobi iterative method.</p>
+    <p>Enter matrix A (rows separated by semicolons, elements by commas) and vector b (comma separated). For example:<br>
+      A = 20,-1,-2; 3,20,-1; 2,-3,20<br>
+      b = 17,-18,25<br>
+      Initial guess x0 (comma separated), e.g., 0,0,0
+    </p>
+    <div class="mb-3">
+      <label for="matrixA" class="form-label">Matrix A:</label>
+      <input type="text" id="matrixA" class="form-control" value="20,-1,-2;3,20,-1;2,-3,20">
+    </div>
+    <div class="mb-3">
+      <label for="vectorB" class="form-label">Vector b:</label>
+      <input type="text" id="vectorB" class="form-control" value="17,-18,25">
+    </div>
+    <div class="mb-3">
+      <label for="initialGuess" class="form-label">Initial Guess x0:</label>
+      <input type="text" id="initialGuess" class="form-control" value="0,0,0">
+    </div>
+    <div class="mb-3">
+      <label for="tol" class="form-label">Tolerance:</label>
+      <input type="text" id="tol" class="form-control" value="1e-6">
+    </div>
+    <div class="mb-3">
+      <label for="maxIter" class="form-label">Max Iterations:</label>
+      <input type="number" id="maxIter" class="form-control" value="100">
+    </div>
+    <button onclick="solveJacobi()" class="btn btn-primary">Solve System</button>
+    <div class="mt-4" id="jacobiResult"></div>
+  </div>
+  
+  <script>
+    function parseMatrix(str) {
+      return str.split(";").map(row => row.split(",").map(Number));
+    }
+    function parseVector(str) {
+      return str.split(",").map(Number);
+    }
+    function solveJacobi() {
+      const data = {
+        A: parseMatrix(document.getElementById("matrixA").value),
+        b: parseVector(document.getElementById("vectorB").value),
+        x0: parseVector(document.getElementById("initialGuess").value),
+        tol: document.getElementById("tol").value,
+        max_iter: document.getElementById("maxIter").value
+      };
+      fetch("http://localhost:5000/solve-jacobi", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        document.getElementById("jacobiResult").innerHTML = `
+        <h4>Solution:</h4>
+        <pre>[${response.solution.join(", ")}]</pre>
+        `;
+      })
+      .catch(err => console.error("Error:", err));
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
