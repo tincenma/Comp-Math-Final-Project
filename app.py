@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from utils.graph_generator import generate_graphical_plot
-from utils.numerical_methods import bisection_method
+from utils.numerical_methods import bisection_method, iterative_matrix_inverse
 from utils.errors_calculations import calculate_absolute_error
 import sympy as sp
 
@@ -60,6 +60,18 @@ def calculate_abs_error():
 
     abs_error = calculate_absolute_error(true_root, approximate_root)
     return jsonify({"absolute_error": abs_error})
+
+@app.route('/invert-matrix', methods=['POST'])
+def invert_matrix():
+    data = request.get_json()
+    if "matrix" not in data or not isinstance(data["matrix"], list):
+        return jsonify({"error": "Invalid input"}), 400
+
+    inverse, error = iterative_matrix_inverse(data["matrix"])
+    if error:
+        return jsonify({"error": error}), 400
+
+    return jsonify({"inverse_matrix": inverse})
 
 if __name__ == '__main__':
     app.run(debug=True)

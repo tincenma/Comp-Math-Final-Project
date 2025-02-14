@@ -1,5 +1,5 @@
 import cmath
-
+import numpy as np
 
 # Numerical Methods Functions
 
@@ -14,7 +14,7 @@ def bisection_method(f, a, b, tol=1e-6):
             b = midpoint 
         else:
             a = midpoint 
-        midpoint = (a + b) / 2 
+        midpoint = (a + ab) / 2 
     return midpoint
 
 def newton_raphson_method(f, df, x0, tol=1e-6):
@@ -76,6 +76,33 @@ def muller_method(f, x0, x1, x2, tol, max_iter=100):
         if abs(x3 - x2) < tol:  # Stop condition
             return x3
         x0, x1, x2 = x1, x2, x3
+        
+def iterative_matrix_inverse(A, tol=1e-6, max_iter=100):
+    try:
+        A = np.array(A, dtype=float)
+        n = A.shape[0]
+
+        if A.shape[0] != A.shape[1]:
+            return None, "Matrix must be square"
+
+        I = np.eye(n)
+        trace_A = np.trace(A)
+        if trace_A == 0:
+            return None, "Matrix trace is zero, cannot use this method"
+
+        X = (1 / trace_A) * I
+        prev_X = np.zeros_like(X)
+
+        for _ in range(max_iter):
+            X_new = X @ (2 * I - A @ X)
+            if np.linalg.norm(X_new - X) < tol:
+                return np.round(X_new, decimals=6).tolist(), None  # Округляем до 6 знаков
+            X = X_new
+
+        return None, "Did not converge"
+    except Exception as e:
+        return None, str(e)
+
 
     print("The method did not converge within the specified number of iterations.")
     return None
