@@ -38,132 +38,427 @@
   <div class="container mt-5">
     <h3 class="text-center">Task 1: Graphical Method & Absolute Error</h3>
     <p class="text-center">Plot the graph of f(x)=x³–4x+1 over the range [0, 3] and compute the absolute error between an approximate and the true root.</p>
+    <!-- Row: Left side (Graph) + Right side (Methods) -->
     <div class="row">
+      <!-- LEFT: Graph Generation -->
       <div class="col-md-6">
         <div class="mb-3">
           <label for="function" class="form-label">Enter function f(x):</label>
-          <input type="text" id="function" class="form-control" value="x**3-4*x+1">
+          <input
+            type="text"
+            id="function"
+            class="form-control"
+            value="x**3-4*x+1"
+          />
         </div>
         <div class="mb-3">
-          <label for="range_x" class="form-label">Enter range of x (min max):</label>
-          <input type="text" id="range_x" class="form-control" value="0 3">
+          <label for="range_x" class="form-label"
+            >Enter range of x (min max):</label
+          >
+          <input
+            type="text"
+            id="range_x"
+            class="form-control"
+            value="0 3"
+          />
         </div>
-        <button onclick="plotGraph()" class="btn btn-primary">Plot Graph</button>
+        <button onclick="plotGraph()" class="btn btn-primary">
+          Plot Graph
+        </button>
         <div class="img-container">
-          <img id="graph_img" src="" alt="Graph will display here">
+          <img id="graph_img" src="" alt="Graph will display here" />
         </div>
       </div>
+
+      <!-- RIGHT: Numerical Methods & Absolute Error -->
       <div class="col-md-6">
+        <!-- Approximate root for error calculation -->
         <div class="mb-3">
-          <label for="approx_root" class="form-label">Approximate Root (from graph):</label>
-          <input type="number" id="approx_root" class="form-control" placeholder="Enter approximate root">
+          <label for="approx_root" class="form-label"
+            >Approximate Root (from graph):</label
+          >
+          <input
+            type="number"
+            id="approx_root"
+            class="form-control"
+            placeholder="Enter approximate root"
+          />
         </div>
+
+        <!-- Method Selection -->
         <div class="mb-3">
           <label for="method" class="form-label">Choose Numerical Method:</label>
           <select id="method" class="form-select" onchange="toggleMethodInputs()">
             <option value="">Select method</option>
             <option value="bisection">Bisection Method</option>
-            <!-- Additional methods can be added here -->
+            <option value="newton_raphson">Newton-Raphson Method</option>
+            <option value="secant">Secant Method</option>
+            <option value="fixed_point">Fixed Point Iteration</option>
+            <option value="false_position">False Position Method</option>
+            <option value="muller">Muller's Method</option>
           </select>
         </div>
-        <div id="bisection_method" style="display: none;">
+
+        <!-- Bisection Method -->
+        <div id="bisection_div" style="display: none;">
           <div class="mb-3">
-            <label for="initial_guess_1" class="form-label">Initial Guess 1:</label>
-            <input type="text" id="initial_guess_1" class="form-control" placeholder="Enter first guess">
-          </div>
-          <div class="mb-3">
-            <label for="initial_guess_2" class="form-label">Initial Guess 2:</label>
-            <input type="text" id="initial_guess_2" class="form-control" placeholder="Enter second guess">
+            <label for="bisection_guess1" class="form-label">Initial Guess 1:</label>
+            <input type="text" id="bisection_guess1" class="form-control" />
           </div>
           <div class="mb-3">
-            <label for="tolerance" class="form-label">Tolerance:</label>
-            <input type="text" id="tolerance" class="form-control" value="1e-6">
+            <label for="bisection_guess2" class="form-label">Initial Guess 2:</label>
+            <input type="text" id="bisection_guess2" class="form-control" />
           </div>
-          <button onclick="calculateTrueRoot()" class="btn btn-info">Calculate True Root</button>
-          <div class="mt-2" id="true_root_display" style="display: none;">
-            <strong>True Root:</strong> <span id="true_root"></span>
+          <div class="mb-3">
+            <label for="bisection_tol" class="form-label">Tolerance:</label>
+            <input type="text" id="bisection_tol" class="form-control" value="1e-6" />
           </div>
+          <button class="btn btn-info" onclick="calculateBisectionRoot()">
+            Calculate Bisection Root
+          </button>
         </div>
-        <button onclick="calculateAbsoluteError()" class="btn btn-success mt-3">Calculate Absolute Error</button>
+
+        <!-- Newton-Raphson Method -->
+        <div id="newton_raphson_div" style="display: none;">
+          <div class="mb-3">
+            <label for="nr_derivative" class="form-label">Derivative f'(x):</label>
+            <input type="text" id="nr_derivative" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="nr_guess" class="form-label">Initial Guess:</label>
+            <input type="text" id="nr_guess" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="nr_tol" class="form-label">Tolerance:</label>
+            <input type="text" id="nr_tol" class="form-control" value="1e-6" />
+          </div>
+          <button class="btn btn-info" onclick="calculateNewtonRaphsonRoot()">
+            Calculate Newton-Raphson Root
+          </button>
+        </div>
+
+        <!-- Secant Method -->
+        <div id="secant_div" style="display: none;">
+          <div class="mb-3">
+            <label for="secant_guess1" class="form-label">Initial Guess 1:</label>
+            <input type="text" id="secant_guess1" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="secant_guess2" class="form-label">Initial Guess 2:</label>
+            <input type="text" id="secant_guess2" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="secant_tol" class="form-label">Tolerance:</label>
+            <input type="text" id="secant_tol" class="form-control" value="1e-6" />
+          </div>
+          <button class="btn btn-info" onclick="calculateSecantRoot()">
+            Calculate Secant Root
+          </button>
+        </div>
+
+        <!-- Fixed Point Iteration -->
+        <div id="fixed_point_div" style="display: none;">
+          <p class="text-muted">
+            Note: f(x)=0 => x = g(x). Provide g(x) in the function field.
+          </p>
+          <div class="mb-3">
+            <label for="g_function" class="form-label">g(x) function:</label>
+            <input type="text" id="g_function" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="fp_guess" class="form-label">Initial Guess:</label>
+            <input type="text" id="fp_guess" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="fp_tol" class="form-label">Tolerance:</label>
+            <input type="text" id="fp_tol" class="form-control" value="1e-6" />
+          </div>
+          <button class="btn btn-info" onclick="calculateFixedPointRoot()">
+            Calculate Fixed-Point Root
+          </button>
+        </div>
+
+        <!-- False Position Method -->
+        <div id="false_position_div" style="display: none;">
+          <div class="mb-3">
+            <label for="fp_a" class="form-label">Initial a:</label>
+            <input type="text" id="fp_a" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="fp_b" class="form-label">Initial b:</label>
+            <input type="text" id="fp_b" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="fp_tolerance" class="form-label">Tolerance:</label>
+            <input type="text" id="fp_tolerance" class="form-control" value="1e-6" />
+          </div>
+          <button class="btn btn-info" onclick="calculateFalsePositionRoot()">
+            Calculate False-Position Root
+          </button>
+        </div>
+
+        <!-- Muller's Method -->
+        <div id="muller_div" style="display: none;">
+          <div class="mb-3">
+            <label for="muller_x0" class="form-label">x0:</label>
+            <input type="number" id="muller_x0" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="muller_x1" class="form-label">x1:</label>
+            <input type="number" id="muller_x1" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="muller_x2" class="form-label">x2:</label>
+            <input type="text" id="muller_x2" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="muller_tol" class="form-label">Tolerance:</label>
+            <input type="text" id="muller_tol" class="form-control" value="1e-6" />
+          </div>
+          <button class="btn btn-info" onclick="calculateMullerRoot()">
+            Calculate Muller's Root
+          </button>
+        </div>
+
+        <!-- Displayed Root -->
+        <div class="mt-2" id="true_root_display" style="display: none;">
+          <strong>True Root:</strong> <span id="true_root"></span>
+        </div>
+
+        <!-- Button & Display for Absolute Error -->
+        <button onclick="calculateAbsoluteError()" class="btn btn-success mt-3">
+          Calculate Absolute Error
+        </button>
         <div class="mt-2" id="abs_error_display" style="display: none;">
           <strong>Absolute Error:</strong> <span id="absolute_error"></span>
         </div>
       </div>
     </div>
   </div>
-  
+
   <!-- JavaScript -->
   <script>
-    // Toggle bisection method inputs based on dropdown
+    // Show/hide input fields depending on method selection
     function toggleMethodInputs() {
+      // Hide all method divs
+      const methodDivs = [
+        "bisection_div",
+        "newton_raphson_div",
+        "secant_div",
+        "fixed_point_div",
+        "false_position_div",
+        "muller_div",
+      ];
+      methodDivs.forEach((id) => {
+        document.getElementById(id).style.display = "none";
+      });
+      document.getElementById("true_root_display").style.display = "none";
+
+      // Show only the selected method's div
       const method = document.getElementById("method").value;
-      document.getElementById("bisection_method").style.display = (method === "bisection") ? "block" : "none";
+      if (method) {
+        document.getElementById(`${method}_div`).style.display = "block";
+      }
     }
-    
-    // Plot the graph by calling backend endpoint
+
+    // Plot the function
     function plotGraph() {
       const data = {
         function: document.getElementById("function").value,
-        range_x: document.getElementById("range_x").value
+        range_x: document.getElementById("range_x").value,
       };
       fetch("http://localhost:5000/plot_graph", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       })
-      .then(res => res.json())
-      .then(response => {
-        const img = document.getElementById("graph_img");
-        img.src = "data:image/png;base64," + response.image;
-        img.style.display = "block";
-      })
-      .catch(err => console.error("Error:", err));
+        .then((res) => res.json())
+        .then((response) => {
+          const img = document.getElementById("graph_img");
+          if (response.image) {
+            img.src = "data:image/png;base64," + response.image;
+            img.style.display = "block";
+          } else if (response.error) {
+            alert("Error: " + response.error);
+          }
+        })
+        .catch((err) => console.error("Error:", err));
     }
-    
-    // Calculate true root using bisection method
-    function calculateTrueRoot() {
+
+    // Bisection
+    function calculateBisectionRoot() {
       const data = {
         function: document.getElementById("function").value,
-        initial_guess_1: document.getElementById("initial_guess_1").value,
-        initial_guess_2: document.getElementById("initial_guess_2").value,
-        tolerance: document.getElementById("tolerance").value
+        initial_guess_1: document.getElementById("bisection_guess1").value,
+        initial_guess_2: document.getElementById("bisection_guess2").value,
+        tolerance: document.getElementById("bisection_tol").value,
       };
       fetch("http://localhost:5000/calculate-bisection", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       })
-      .then(res => res.json())
-      .then(response => {
-        if(response.true_root){
-          document.getElementById("true_root").innerText = response.true_root;
-          document.getElementById("true_root_display").style.display = "block";
-        }
-      })
-      .catch(err => console.error("Error:", err));
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.true_root) {
+            document.getElementById("true_root").innerText = response.true_root;
+            document.getElementById("true_root_display").style.display = "block";
+          } else if (response.error) {
+            alert("Error: " + response.error);
+          }
+        })
+        .catch((err) => console.error("Error:", err));
     }
-    
+
+    // Newton-Raphson
+    function calculateNewtonRaphsonRoot() {
+      const data = {
+        function: document.getElementById("function").value,
+        derivative: document.getElementById("nr_derivative").value,
+        x0: document.getElementById("nr_guess").value,
+        tolerance: document.getElementById("nr_tol").value,
+      };
+      fetch("http://localhost:5000/calculate-newton-raphson", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.root !== undefined) {
+            document.getElementById("true_root").innerText = response.root;
+            document.getElementById("true_root_display").style.display = "block";
+          } else if (response.error) {
+            alert("Error: " + response.error);
+          }
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
+    // Secant
+    function calculateSecantRoot() {
+      const data = {
+        function: document.getElementById("function").value,
+        initial_guess_1: document.getElementById("secant_guess1").value,
+        initial_guess_2: document.getElementById("secant_guess2").value,
+        tolerance: document.getElementById("secant_tol").value,
+      };
+      fetch("http://localhost:5000/calculate-secant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.root !== undefined) {
+            document.getElementById("true_root").innerText = response.root;
+            document.getElementById("true_root_display").style.display = "block";
+          } else if (response.error) {
+            alert("Error: " + response.error);
+          }
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
+    // Fixed Point
+    function calculateFixedPointRoot() {
+      const data = {
+        g: document.getElementById("g_function").value,
+        x0: document.getElementById("fp_guess").value,
+        tolerance: document.getElementById("fp_tol").value,
+      };
+      fetch("http://localhost:5000/calculate-fixed-point", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.root !== undefined) {
+            document.getElementById("true_root").innerText = response.root;
+            document.getElementById("true_root_display").style.display = "block";
+          } else if (response.error) {
+            alert("Error: " + response.error);
+          }
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
+    // False Position
+    function calculateFalsePositionRoot() {
+      const data = {
+        function: document.getElementById("function").value,
+        a: document.getElementById("fp_a").value,
+        b: document.getElementById("fp_b").value,
+        tolerance: document.getElementById("fp_tolerance").value,
+      };
+      fetch("http://localhost:5000/calculate-false-position", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.root !== undefined) {
+            document.getElementById("true_root").innerText = response.root;
+            document.getElementById("true_root_display").style.display = "block";
+          } else if (response.error) {
+            alert("Error: " + response.error);
+          }
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
+    // Muller's Method
+    function calculateMullerRoot() {
+      const data = {
+        function: document.getElementById("function").value,
+        x0: document.getElementById("muller_x0").value,
+        x1: document.getElementById("muller_x1").value,
+        x2: document.getElementById("muller_x2").value,
+        tolerance: document.getElementById("muller_tol").value,
+      };
+      fetch("http://localhost:5000/calculate-muller", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.root !== undefined) {
+            document.getElementById("true_root").innerText = response.root;
+            document.getElementById("true_root_display").style.display = "block";
+          } else if (response.error) {
+            alert("Error: " + response.error);
+          }
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
     // Calculate absolute error
     function calculateAbsoluteError() {
       const data = {
         approximate_root: document.getElementById("approx_root").value,
-        true_root: document.getElementById("true_root").innerText
+        true_root: document.getElementById("true_root").innerText,
       };
       fetch("http://localhost:5000/calculate-absolute-error", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       })
-      .then(res => res.json())
-      .then(response => {
-        if(response.absolute_error !== undefined){
-          document.getElementById("absolute_error").innerText = response.absolute_error;
-          document.getElementById("abs_error_display").style.display = "block";
-        }
-      })
-      .catch(err => console.error("Error:", err));
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.absolute_error !== undefined) {
+            document.getElementById("absolute_error").innerText =
+              response.absolute_error;
+            document.getElementById("abs_error_display").style.display = "block";
+          }
+        })
+        .catch((err) => console.error("Error:", err));
     }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
 </body>
 </html>

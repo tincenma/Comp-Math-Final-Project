@@ -36,7 +36,7 @@
     <p class="text-center">Enter a square matrix A (rows separated by semicolons, elements by commas) to compute its inverse iteratively.</p>
     <div class="mb-3">
       <label for="matrixA" class="form-label">Matrix A:</label>
-      <input type="text" id="matrixA" class="form-control" value="1,10,1;2,0,1;3,3,2">
+      <input type="text" id="matrixA" class="form-control" value="4,-2,1;-2,4,-2;1,-2,4">
     </div>
     <div class="mb-3">
       <label for="tol" class="form-label">Tolerance:</label>
@@ -70,6 +70,8 @@
         document.getElementById("inverseResult").innerHTML = `
           Inverse Matrix:
           <pre>${response.inverse.map(row => row.join(" ")).join("\n")}</pre>
+          Check: A * A_inv ≈ I
+          <pre>${response.identity_matrix.map(row => row.join(" ")).join("\n")}</pre>
         `;
       })
       .catch(err => console.error("Error:", err));

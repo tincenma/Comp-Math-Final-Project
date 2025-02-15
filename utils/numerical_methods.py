@@ -171,13 +171,14 @@ def iterative_matrix_inverse(A, tol=1e-6, max_iter=100):
     """
     n = A.shape[0]
     I = np.eye(n)
-    B = A.T / (np.linalg.norm(A, 1) * np.linalg.norm(A, np.inf))
+    B = np.linalg.inv(A) + 0.1 * np.random.randn(3, 3)  # Noisy initial approximation
     for _ in range(max_iter):
-        E = I - A.dot(B)
+        E = np.dot(A, B) - I  # Calculating the error
+        B_new = B - np.dot(B, E)  # Proximity update
         if np.linalg.norm(E, ord='fro') < tol:
-            return B
-        B = B + B.dot(E)
-    return B
+            return B_new
+        B = B_new
+    return B_new
 
 def lu_factorization(A):
     """LU factorization of matrix A (A = LU)."""
